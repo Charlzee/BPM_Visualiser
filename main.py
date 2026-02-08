@@ -6,19 +6,18 @@ from mutagen.mp3 import MP3
 from pygame import mixer, quit
 
 mixer.init()
-beat_sfx = mixer.Sound("beat.wav")
-end_beat_sfx = mixer.Sound("beat_end.wav")
-mixer.music.load("music.mp3")
 
 # ------
-UPDATE_FREQUENCY = 0.05 # How often the display updates, lower numbers are more accurate, but take more CPU (0.05-0.2 recomended)
+UPDATE_SETTING = "DYNAMIC" # 'MANUAL': Updates depending on UPDATE_FREQUENCY; 'DYNAMIC': Updates dynamically based on BPM/Beat
+UPDATE_FREQUENCY = 0.05 # (UPDATE_SETTING must be 'MANUAL'); How often the display updates, lower numbers are more accurate, but take more CPU (0.05-0.2 recomended)
 SOUNDS_ENABLED = False # Enable / Disable SFX
 # ------
 
 song_name = "The Third Sanctuary"
+song_path = f"music/{song_name.lower()}.mp3"
 bpm = signatures.get(song_name, "bpm")[0]
 time_signatures = signatures.get(song_name, "signatures")[0]
-total_length = MP3("music.mp3").info.length
+total_length = MP3(song_path).info.length
 
 mins, secs = divmod(total_length, 60)
 mins, secs = int(mins), int(secs)
@@ -32,6 +31,9 @@ current_beat_sig = 1
 
 num, den = 0,0
 
+beat_sfx = mixer.Sound("beat.wav")
+end_beat_sfx = mixer.Sound("beat_end.wav")
+mixer.music.load(song_path)
 
 mixer.music.play()
 
@@ -68,6 +70,8 @@ for numerator, denominator in time_signatures:
         break # music ended
 
     spb = 60 / bpm * (4 / denominator) # update seconds per beat
+    if UPDATE_SETTING == "DYNAMIC":
+        UPDATE_FREQUENCY = spb
     for i in range(1, numerator + 1):
         current_beat_sig = i
         if SOUNDS_ENABLED:
@@ -82,5 +86,4 @@ for numerator, denominator in time_signatures:
 
 current_min = mins
 current_sec = secs
-mixer.quit()
 quit()
