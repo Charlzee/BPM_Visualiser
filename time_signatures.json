@@ -53,8 +53,27 @@
                 "amount": 48
             },
             {
-                "sig": [23, 8],
+                "sig": [23, 16],
                 "amount": 12
+            }
+        ]
+    },
+    {
+        "name": "The Second Sanctuary",
+        "bpm": 170,
+        "locked": false,
+        "time_signatures": [
+            {
+                "sig": [9, 4],
+                "amount": 8
+            },
+            {
+                "sig": [6, 8],
+                "amount": 40
+            },
+            {
+                "sig": [5, 8],
+                "amount": 13
             }
         ]
     }

@@ -11,7 +11,7 @@ mixer.init()
 # ------
 SONG_NAME = "The Third Sanctuary" # Name of the song
 UPDATE_SETTING = "DYNAMIC" # 'MANUAL': Updates depending on Update_Frequency; 'DYNAMIC': Updates dynamically based on BPM/Beat
-SOUNDS_ENABLED = False # Enable / Disable SFX
+SOUNDS_ENABLED = True # Enable / Disable SFX
 
 Update_Frequency = 0.05 # (UPDATE_SETTING must be 'MANUAL'); How often the display updates; lower numbers are more accurate, but take more CPU (0.05-0.2 recomended)
 # ------
@@ -60,7 +60,7 @@ def sendOutput():
         print(f"""
               {moveBack(7)}
               |  {Fore.LIGHTCYAN_EX}Playing Song:{Fore.RESET}              
-              |  {Fore.YELLOW}{SONG_NAME}{Fore.RESET} {current_min:02d}:{current_sec:02d}/{mins:02d}:{secs:02d}              
+              |  {Fore.YELLOW}{SONG_NAME}{Fore.RESET} ({current_min:02d}:{current_sec:02d}/{mins:02d}:{secs:02d})              
               |  {Fore.GREEN}{bpm}BPM  {Fore.RED}{num}/{den}  {Fore.BLACK}({current_beat}/{total_beats}){Fore.RESET}              
               |              
               |     Beat {current_beat_sig}{Fore.BLACK}/{num}{Fore.RESET}         
