@@ -8,15 +8,16 @@ from pygame import mixer, quit
 mixer.init()
 
 # ------
-UPDATE_SETTING = "DYNAMIC" # 'MANUAL': Updates depending on UPDATE_FREQUENCY; 'DYNAMIC': Updates dynamically based on BPM/Beat
-UPDATE_FREQUENCY = 0.05 # (UPDATE_SETTING must be 'MANUAL'); How often the display updates, lower numbers are more accurate, but take more CPU (0.05-0.2 recomended)
+SONG_NAME = "The Third Sanctuary" # Name of the song
+UPDATE_SETTING = "DYNAMIC" # 'MANUAL': Updates depending on Update_Frequency; 'DYNAMIC': Updates dynamically based on BPM/Beat
 SOUNDS_ENABLED = False # Enable / Disable SFX
+
+Update_Frequency = 0.05 # (UPDATE_SETTING must be 'MANUAL'); How often the display updates, lower numbers are more accurate, but take more CPU (0.05-0.2 recomended)
 # ------
 
-song_name = "The Third Sanctuary"
-song_path = f"music/{song_name.lower()}.mp3"
-bpm = signatures.get(song_name, "bpm")[0]
-time_signatures = signatures.get(song_name, "signatures")[0]
+song_path = f"music/{SONG_NAME.lower()}.mp3"
+bpm = signatures.get(SONG_NAME, "bpm")[0]
+time_signatures = signatures.get(SONG_NAME, "signatures")[0]
 total_length = MP3(song_path).info.length
 
 mins, secs = divmod(total_length, 60)
@@ -54,13 +55,13 @@ def sendOutput():
         print(f"""
               {moveBack(7)}
               |  {Fore.LIGHTCYAN_EX}Playing Song:{Fore.RESET}              
-              |  {Fore.YELLOW}{song_name}{Fore.RESET} {current_min:02d}:{current_sec:02d}/{mins:02d}:{secs:02d}              
+              |  {Fore.YELLOW}{SONG_NAME}{Fore.RESET} {current_min:02d}:{current_sec:02d}/{mins:02d}:{secs:02d}              
               |  {Fore.GREEN}{bpm}BPM  {Fore.RED}{num}/{den}  {Fore.BLACK}({current_beat}/{total_beats}){Fore.RESET}              
               |              
               |     Beat {current_beat_sig}{Fore.BLACK}/{num}{Fore.RESET}              
               """
             , end="")
-        time.sleep(UPDATE_FREQUENCY)
+        time.sleep(Update_Frequency)
 
 threading.Thread(target=sendOutput).start()
 
@@ -71,7 +72,7 @@ for numerator, denominator in time_signatures:
 
     spb = 60 / bpm * (4 / denominator) # update seconds per beat
     if UPDATE_SETTING == "DYNAMIC":
-        UPDATE_FREQUENCY = spb
+        Update_Frequency = spb
     for i in range(1, numerator + 1):
         current_beat_sig = i
         if SOUNDS_ENABLED:
