@@ -96,7 +96,6 @@ def get(name:str, dataType:str="signatures"):
                         for amount in range(j["amount"]):
                             signatures.append((j["sig"][0], j["sig"][1])) # turn list into tuple then append
                 elif dataType == "bpm":
-                    print(i["bpm"])
                     return i["bpm"], True
                 else:
                     ValueError("Must be 'signatures' or 'bpm'")
