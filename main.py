@@ -25,6 +25,7 @@ mins, secs = int(mins), int(secs)
 
 current_min = 0
 current_sec = 0
+current_ms = 0
 
 total_beats = total_beats = sum(numerator for numerator, denominator in time_signatures)
 current_beat = 1
@@ -47,8 +48,11 @@ def newLine(amount):
 print(newLine(25))
 
 def sendOutput():
-    global current_min, current_sec
-    while mixer.music.get_busy():
+    global current_min, current_sec, current_ms
+    while True:
+        if not mixer.music.get_busy:
+            break
+        
         current_ms = mixer.music.get_pos()
         current_min, current_sec = divmod(current_ms//1000, 60)
         current_min, current_sec = int(current_min), int(current_sec)
@@ -84,6 +88,7 @@ for numerator, denominator in time_signatures:
         current_beat += 1
         time.sleep(spb)
 
+time.sleep(current_ms - total_length*1000)
 
 current_min = mins
 current_sec = secs
