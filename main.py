@@ -11,7 +11,7 @@ end_beat_sfx = mixer.Sound("beat_end.wav")
 mixer.music.load("music.mp3")
 
 # ------
-UPDATE_FREQUENCY = 0 # How often the display updates, lower numbers are more accurate, but take more CPU
+UPDATE_FREQUENCY = 0.05 # How often the display updates, lower numbers are more accurate, but take more CPU (0.05-0.1 recomended)
 # ------
 
 song_name = "The Third Sanctuary"
