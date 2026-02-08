@@ -10,6 +10,10 @@ beat_sfx = mixer.Sound("beat.wav")
 end_beat_sfx = mixer.Sound("beat_end.wav")
 mixer.music.load("music.mp3")
 
+# ------
+UPDATE_FREQUENCY = 0 # How often the display updates, lower numbers are more accurate, but take more CPU
+# ------
+
 song_name = "The Third Sanctuary"
 bpm = signatures.get(song_name, "bpm")[0]
 time_signatures = signatures.get(song_name, "signatures")[0]
@@ -53,7 +57,7 @@ def sendOutput():
               |     Beat {current_beat_sig}{Fore.BLACK}/{num}{Fore.RESET}              
               """
             , end="")
-        time.sleep(0.05)
+        time.sleep(UPDATE_FREQUENCY)
 
 threading.Thread(target=sendOutput).start()
 
