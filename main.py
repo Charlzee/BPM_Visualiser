@@ -32,7 +32,8 @@ total_beats = total_beats = sum(numerator for numerator, denominator in time_sig
 current_beat = 1
 current_beat_sig = 1
 
-num, den = 0,0
+num, den = time_signatures[0]
+next_num, next_den = time_signatures[0]
 
 beat_sfx = mixer.Sound("beat.wav")
 end_beat_sfx = mixer.Sound("beat_end.wav")
@@ -48,9 +49,27 @@ def newLine(amount):
 
 print(newLine(25))
 
+
 def sendOutput():
     global current_min, current_sec, current_ms
     while True:
+        
+        
+        # Text here so it is easier to edit
+        txt_playing = f"{Fore.LIGHTCYAN_EX}Playing Song:{Fore.RESET}"
+        txt_name = f"{Fore.YELLOW}{SONG_NAME}{Fore.RESET}"
+
+        txt_duration = f"({current_min:02d}:{current_sec:02d}/{mins:02d}:{secs:02d})"
+        txt_bpm = f"{Fore.GREEN}{bpm}BPM{Fore.RESET}"
+
+        txt_time_signature = f"{Fore.RED}{num}/{den}"
+        txt_next_signature = f"{Fore.BLACK}(Next: {next_num}/{next_den})"
+
+        txt_beat_total = f"({current_beat}/{total_beats}){Fore.RESET}"
+        txt_beats = f"Beat {current_beat_sig}{Fore.BLACK}/{num}{Fore.RESET}"
+    
+    
+    
         if (current_ms >= total_length*1000) or (current_ms == -1):
             break
         
@@ -59,19 +78,25 @@ def sendOutput():
         current_min, current_sec = int(current_min), int(current_sec)
         print(f"""
               {moveBack(7)}
-              |  {Fore.LIGHTCYAN_EX}Playing Song:{Fore.RESET}              
-              |  {Fore.YELLOW}{SONG_NAME}{Fore.RESET} ({current_min:02d}:{current_sec:02d}/{mins:02d}:{secs:02d})              
-              |  {Fore.GREEN}{bpm}BPM  {Fore.RED}{num}/{den}  {Fore.BLACK}({current_beat}/{total_beats}){Fore.RESET}              
+              |  {txt_playing}              
+              |  {txt_name} {txt_duration}              
+              |  {txt_bpm}  {txt_time_signature} {txt_next_signature}  {txt_beat_total}              
               |              
-              |     Beat {current_beat_sig}{Fore.BLACK}/{num}{Fore.RESET}         
+              |     {txt_beats}         
               """
             , end="")
         time.sleep(Update_Frequency)
 
 threading.Thread(target=sendOutput).start()
 
-for numerator, denominator in time_signatures:
+for i, (numerator, denominator) in enumerate(time_signatures):
     num, den = numerator, denominator
+
+    if i + 1 < len(time_signatures):
+        next_num, next_den = time_signatures[i + 1]
+    else:
+        next_num, next_den = None, None  # no next
+        
     if (current_ms >= total_length*1000) or (current_ms == -1):
         break
 
