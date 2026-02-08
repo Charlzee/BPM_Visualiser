@@ -1,0 +1,29 @@
+[
+    {
+        "name": "The Third Sanctuary",
+        "locked": true,
+        "time_signatures": [
+            {"sig":  [9, 4], "amount": 8   }, 
+            
+            {"sig":  [11, 8], "amount": 4  },
+            {"sig":  [4, 8], "amount": 1   },
+            
+            {"sig":  [11, 8], "amount": 16 },
+            
+            {"sig":  [5, 8], "amount": 48  },
+            
+            {"sig":  [11, 8], "amount": 2  },
+            {"sig":  [10, 8], "amount": 1  },
+            {"sig":  [12, 8], "amount": 1  },
+            {"sig":  [11, 8], "amount": 3  },
+            
+            {"sig":  [12, 8], "amount": 2  },
+            
+            {"sig":  [11, 8], "amount": 15 },
+            
+            {"sig":  [5, 8], "amount": 48  },
+            
+            {"sig":  [23, 8], "amount": 12  }
+        ]
+    }
+]
