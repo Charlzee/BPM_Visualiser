@@ -11,7 +11,8 @@ end_beat_sfx = mixer.Sound("beat_end.wav")
 mixer.music.load("music.mp3")
 
 # ------
-UPDATE_FREQUENCY = 0.05 # How often the display updates, lower numbers are more accurate, but take more CPU (0.05-0.1 recomended)
+UPDATE_FREQUENCY = 0.05 # How often the display updates, lower numbers are more accurate, but take more CPU (0.05-0.2 recomended)
+SOUNDS_ENABLED = False # Enable / Disable SFX
 # ------
 
 song_name = "The Third Sanctuary"
@@ -69,13 +70,17 @@ for numerator, denominator in time_signatures:
     spb = 60 / bpm * (4 / denominator) # update seconds per beat
     for i in range(1, numerator + 1):
         current_beat_sig = i
-        if i == 1: # first beat of the measure
-            end_beat_sfx.play()
-        else:
-            beat_sfx.play()
+        if SOUNDS_ENABLED:
+            if i == 1: # first beat of the measure
+                end_beat_sfx.play()
+            else:
+                beat_sfx.play()
         
         current_beat += 1
         time.sleep(spb)
 
+
+current_min = mins
+current_sec = secs
 mixer.quit()
 quit()
