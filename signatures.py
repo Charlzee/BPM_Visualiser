@@ -22,15 +22,17 @@ def new(name:str, signatures:dict, bpm:float, locked:bool=False, dontAppend:bool
             signatures (dict): Signatures in the song:
                 'sig' (list): The time signature,
                 'amount' (int): The amount of measures to repeat for
+                'comment': (str): (Optional) Shows in the display when active
                 
                 Should look like: 
                 [
-                    {'sig':[0,0], 'amount':0}
+                    {'sig':[0,0], 'amount':0, 'comment':'Hello World!'}
                 ]
                 Example:
                 [
                     {'sig':  [4, 4], 'amount': 8},
-                    {'sig':  [4, 8], 'amount': 4}
+                    {'sig':  [4, 8], 'amount': 4},
+                    {'sig': [23, 8], 'amount': 12, 'comment': 'WHY???'}
                 ]
     """
 
@@ -39,6 +41,7 @@ def new(name:str, signatures:dict, bpm:float, locked:bool=False, dontAppend:bool
     if doesExist:
         print(f"\"{name}\" already exists")
         return f"\"{name}\" already exists"
+
 
     newDict = {
         "name": name,
@@ -88,18 +91,25 @@ def lock(name: str, locked:bool=True):
 def get(name:str, dataType:str="signatures"):
     dataType = dataType.lower()
     try:
+        
         for i in data:
             if i["name"].lower() == name.lower():
                 if (dataType == "signatures") or (dataType == "signature"):
                     signatures = []
                     for j in i["time_signatures"]:
                         for amount in range(j["amount"]):
-                            signatures.append((j["sig"][0], j["sig"][1])) # turn list into tuple then append
+                            # turn list into tuple then append
+                            if j.get("comment"):
+                                signatures.append([(j["sig"][0], j["sig"][1]), j["comment"]]) 
+                            else:
+                                signatures.append([(j["sig"][0], j["sig"][1]), ""]) 
+                            print(signatures)
+                            
                 elif dataType == "bpm":
                     return i["bpm"], True
                 else:
                     ValueError("Must be 'signatures' or 'bpm'")
-        
+        print(signatures)
         return signatures, True
     
     except Exception as e:

@@ -54,7 +54,8 @@
             },
             {
                 "sig": [23, 8],
-                "amount": 12
+                "amount": 12,
+                "comment": "oh god."
             }
         ]
     }

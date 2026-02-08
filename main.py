@@ -28,12 +28,14 @@ current_min = 0
 current_sec = 0
 current_ms = 0
 
-total_beats = total_beats = sum(numerator for numerator, denominator in time_signatures)
+total_beats = sum(sig[0][0] for sig in time_signatures)
+comment = time_signatures[1][1]
+
 current_beat = 1
 current_beat_sig = 1
 
-num, den = time_signatures[0]
-next_num, next_den = time_signatures[0]
+num, den = time_signatures[0][0]
+next_num, next_den = time_signatures[0][0]
 
 beat_sfx = mixer.Sound("beat.wav")
 end_beat_sfx = mixer.Sound("beat_end.wav")
@@ -65,6 +67,8 @@ def sendOutput():
         txt_time_signature = f"{Fore.RED}{num}/{den}"
         txt_next_signature = f"{Fore.BLACK}(Next: {next_num}/{next_den})"
 
+        txt_comment = f"- {comment}" if comment else ""
+
         txt_beat_total = f"({current_beat}/{total_beats}){Fore.RESET}"
         txt_beats = f"Beat {current_beat_sig}{Fore.BLACK}/{num}{Fore.RESET}"
     
@@ -80,7 +84,7 @@ def sendOutput():
               {moveBack(7)}
               |  {txt_playing}              
               |  {txt_name} {txt_duration}              
-              |  {txt_bpm}  {txt_time_signature} {txt_next_signature}  {txt_beat_total}              
+              |  {txt_bpm} {txt_time_signature} {txt_comment} {txt_next_signature}  {txt_beat_total}              
               |              
               |     {txt_beats}         
               """
@@ -89,13 +93,16 @@ def sendOutput():
 
 threading.Thread(target=sendOutput).start()
 
-for i, (numerator, denominator) in enumerate(time_signatures):
+for i, sig in enumerate(time_signatures):
+    numerator, denominator = sig[0]
+    comment = sig[1]
+
     num, den = numerator, denominator
 
     if i + 1 < len(time_signatures):
-        next_num, next_den = time_signatures[i + 1]
+        next_num, next_den = time_signatures[i + 1][0]
     else:
-        next_num, next_den = None, None  # no next
+        next_num, next_den = num, den  # no next
         
     if (current_ms >= total_length*1000) or (current_ms == -1):
         break
