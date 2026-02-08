@@ -4,7 +4,7 @@ import threading
 import sys
 from colorama import Fore
 from mutagen.mp3 import MP3
-from pygame import mixer, quit
+from pygame import mixer
 
 mixer.init()
 
@@ -75,7 +75,7 @@ for numerator, denominator in time_signatures:
     if (current_ms >= total_length*1000) or (current_ms == -1):
         break
 
-    spb = 60 / bpm * (4 / denominator) # update seconds per beat
+    spb = 60 / bpm * (4 / denominator) # seconds per beat
     if UPDATE_SETTING == "DYNAMIC":
         Update_Frequency = spb
     for i in range(1, numerator + 1):
