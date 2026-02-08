@@ -32,7 +32,7 @@ def new(name:str, signatures:dict, locked:bool=False, dontAppend:bool=False):
                 ]
     """
 
-    returnData, doesExist = get(name)
+    doesExist = get(name)[1]
     
     if doesExist:
         print(f"\"{name}\" already exists")

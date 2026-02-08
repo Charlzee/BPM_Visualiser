@@ -8,7 +8,7 @@ end_beat_sfx = mixer.Sound("beat_end.wav")
 mixer.music.load("music.mp3")
 
 bpm = 170
-time_signatures = signatures.get("The Third Sanctuary")
+time_signatures = signatures.get("The Third Sanctuary")[0]
 
 mixer.music.play()
 
