@@ -84,7 +84,7 @@ def sendOutput():
               {moveBack(7)}
               |  {txt_playing}              
               |  {txt_name} {txt_duration}              
-              |  {txt_bpm}  {txt_time_signature} {txt_comment} {txt_next_signature}  {txt_beat_total}              
+              |  {txt_bpm}  {txt_time_signature} {txt_comment} {txt_next_signature} {txt_beat_total}              
               |              
               |     {txt_beats}         
               """
