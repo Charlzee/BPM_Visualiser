@@ -11,7 +11,7 @@ def _collapse_sig_lists(s): # Make "sig": [4,4] not indent because it is ugly
         s
     )
 
-def new(name:str, signatures:dict, bpm:int, locked:bool=False, dontAppend:bool=False):
+def new(name:str, signatures:dict, bpm:float, locked:bool=False, dontAppend:bool=False):
     """
         Create a new signature dict
         
