@@ -7,16 +7,16 @@ beat_sfx = mixer.Sound("beat.wav")
 end_beat_sfx = mixer.Sound("beat_end.wav")
 mixer.music.load("music.mp3")
 
-bpm = 170
-time_signatures = signatures.get("The Third Sanctuary")[0]
+bpm = signatures.get("The Third Sanctuary", "bpm")[0]
+time_signatures = signatures.get("The Third Sanctuary", "signatures")[0]
 
 mixer.music.play()
 
 for numerator, denominator in time_signatures:
     if not mixer.music.get_busy():
-        break  # music ended
+        break # music ended
 
-    spb = 60 / bpm * (4 / denominator)  # update seconds per beat
+    spb = 60 / bpm * (4 / denominator) # update seconds per beat
     for i in range(1, numerator + 1):
         print(f"Beat {i}     ", end="\r")
         

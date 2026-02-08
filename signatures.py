@@ -4,19 +4,21 @@ data_path = "time_signatures.data"
 with open(data_path, "r") as file:
     data = json.load(file)
 
-def _collapse_sig_lists(s):
+def _collapse_sig_lists(s): # Make "sig": [4,4] not indent because it is ugly
     return re.sub(
         r'\[\s*(\d+),\s*(\d+)\s*\]',
         r'[\1, \2]',
         s
     )
 
-def new(name:str, signatures:dict, locked:bool=False, dontAppend:bool=False):
+def new(name:str, signatures:dict, bpm:int, locked:bool=False, dontAppend:bool=False):
     """
         Create a new signature dict
         
         Parameters:
             name (str): Name of the song for the time signature
+            bpm (float): Beats Per Minute 
+            locked (bool): Prevent deletion via `delete(name)`
             signatures (dict): Signatures in the song:
                 'sig' (list): The time signature,
                 'amount' (int): The amount of measures to repeat for
@@ -40,6 +42,7 @@ def new(name:str, signatures:dict, locked:bool=False, dontAppend:bool=False):
 
     newDict = {
         "name": name,
+        "bpm": bpm,
         "locked": locked,
         "time_signatures": signatures,
     }
@@ -82,14 +85,21 @@ def lock(name: str, locked:bool=True):
                 
             break
 
-def get(name:str):
+def get(name:str, dataType:str="signatures"):
+    dataType = dataType.lower()
     try:
         for i in data:
             if i["name"].lower() == name.lower():
-                signatures = []
-                for j in i["time_signatures"]:
-                    for amount in range(j["amount"]):
-                        signatures.append((j["sig"][0], j["sig"][1])) # turn list into tuple then append
+                if (dataType == "signatures") or (dataType == "signature"):
+                    signatures = []
+                    for j in i["time_signatures"]:
+                        for amount in range(j["amount"]):
+                            signatures.append((j["sig"][0], j["sig"][1])) # turn list into tuple then append
+                elif dataType == "bpm":
+                    print(i["bpm"])
+                    return i["bpm"], True
+                else:
+                    ValueError("Must be 'signatures' or 'bpm'")
         
         return signatures, True
     

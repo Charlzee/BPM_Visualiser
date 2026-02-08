@@ -1,6 +1,7 @@
 [
     {
         "name": "The Third Sanctuary",
+        "bpm": 170,
         "locked": true,
         "time_signatures": [
             {"sig":  [9, 4], "amount": 8}, 
