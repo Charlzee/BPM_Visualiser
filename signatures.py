@@ -1,6 +1,6 @@
 import json, re
 
-data_path = "time_signatures.data"
+data_path = "time_signatures.json"
 with open(data_path, "r") as file:
     data = json.load(file)
 
